@@ -30,20 +30,24 @@ const Formulario = () => {
     } else {
       Swal.fire({
         title: "Datos guardados correctamente",
-        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha.split("-").reverse().join("/")}, ${dato.hora}, ${dato.sintomas}`,
+        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha
+          .split("-")
+          .reverse()
+          .join("/")}, ${dato.hora}, ${dato.sintomas}`,
         icon: "success",
         draggable: true,
       });
+
+      setDatosCorrectos([...datosCorrectos, dato]);
+      setDato({
+        nombreMascota: "",
+        nombreDuenio: "",
+        fecha: "",
+        hora: "",
+        sintomas: "",
+      });
     }
 
-    setDatosCorrectos([...datosCorrectos, dato]);
-    setDato({
-      nombreMascota: "",
-      nombreDuenio: "",
-      fecha: "",
-      hora: "",
-      sintomas: "",
-    });
     setValidated(false);
   };
 
@@ -161,7 +165,7 @@ const Formulario = () => {
         </Form>
       </section>
       <section className="my-3">
-        <ListaCitas datosProps={datosCorrectos}/>
+        <ListaCitas datosProps={datosCorrectos} />
       </section>
     </div>
   );
