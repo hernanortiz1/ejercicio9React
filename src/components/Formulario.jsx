@@ -1,19 +1,67 @@
 import { useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
+import Swal from "sweetalert2";
 
 const Formulario = () => {
+  const [dato, setDato] = useState({
+    nombreMascota: "",
+    nombreDuenio: "",
+    fecha: "",
+    hora: "",
+    sintomas: "",
+  });
+  const [datosCorrectos, setDatosCorrectos] = useState([]);
   const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+
     if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      e.stopPropagation();
+
+      Swal.fire({
+        icon: "error",
+        title: "Datos incorrectos!",
+        text: "Volvé a ingresar los datos",
+      });
+    } else {
+      Swal.fire({
+        title: "Datos guardados correctamente",
+        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha
+          .split("-")
+          .reverse()
+          .join("/")}, ${dato.hora}, ${dato.sintomas}`,
+        icon: "success",
+        draggable: true,
+      });
+
+      setDatosCorrectos([...datosCorrectos, dato]);
+      setDato({
+        nombreMascota: "",
+        nombreDuenio: "",
+        fecha: "",
+        hora: "",
+        sintomas: "",
+      });
     }
 
-    setValidated(true);
+    setValidated(false);
   };
+
+  const borrarDatos = (nombreDuenio) => {
+    const indice = colores.findIndex((item) => item === nombreDuenio);
+
+    if (indice !== -1) {
+      const datosNuevos = [...datosCorrectos];
+
+      datosNuevos.splice(indice, 1);
+      setColores(datosNuevos);
+    }
+  };
+
   return (
     <div>
       <section className="p-3 border rounded-3 fondoFormulario">
@@ -21,7 +69,16 @@ const Formulario = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="6" controlId="nombreMascota">
               <Form.Label>Nombre de mascota *</Form.Label>
-              <Form.Control required type="text" placeholder="Ingrese nombre" />
+              <Form.Control
+                required
+                type="text"
+                placeholder="Ingrese nombre de mascota"
+                value={dato.nombreMascota}
+                name="nombreMascota"
+                onChange={(e) =>
+                  setDato({ ...dato, [e.target.name]: e.target.value })
+                }
+              />
               <Form.Control.Feedback>Dato correcto</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Dato incorrecto
@@ -32,7 +89,12 @@ const Formulario = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="Ingrese apellido"
+                placeholder="Ingrese nombre de dueño"
+                value={dato.nombreDuenio}
+                name="nombreDuenio"
+                onChange={(e) =>
+                  setDato({ ...dato, [e.target.name]: e.target.value })
+                }
               />
               <Form.Control.Feedback>Dato correcto</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
@@ -44,7 +106,16 @@ const Formulario = () => {
           <Row className="mb-3">
             <Form.Group as={Col} md="6" controlId="fecha">
               <Form.Label>Fecha *</Form.Label>
-              <Form.Control type="date" placeholder="Ingrese fecha" required />
+              <Form.Control
+                type="date"
+                placeholder="Ingrese fecha"
+                required
+                value={dato.fecha}
+                name="fecha"
+                onChange={(e) =>
+                  setDato({ ...dato, [e.target.name]: e.target.value })
+                }
+              />
               <Form.Control.Feedback>Dato correcto</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Dato incorrecto
@@ -52,7 +123,16 @@ const Formulario = () => {
             </Form.Group>
             <Form.Group as={Col} md="6" controlId="hora">
               <Form.Label>Hora *</Form.Label>
-              <Form.Control type="time" placeholder="Ingrese hora" required />
+              <Form.Control
+                type="time"
+                placeholder="Ingrese hora"
+                required
+                value={dato.hora}
+                name="hora"
+                onChange={(e) =>
+                  setDato({ ...dato, [e.target.name]: e.target.value })
+                }
+              />
               <Form.Control.Feedback>Dato correcto</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
                 Dato incorrecto
@@ -67,6 +147,11 @@ const Formulario = () => {
                 rows={3}
                 placeholder="Ingrese sintomas"
                 required
+                value={dato.sintomas}
+                name="sintomas"
+                onChange={(e) =>
+                  setDato({ ...dato, [e.target.name]: e.target.value })
+                }
               />
               <Form.Control.Feedback>Dato correcto</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
@@ -80,7 +165,7 @@ const Formulario = () => {
         </Form>
       </section>
       <section className="my-3">
-        <ListaCitas />
+        <ListaCitas datosProps={datosCorrectos} />
       </section>
     </div>
   );

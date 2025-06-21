@@ -1,13 +1,19 @@
 import Cita from "./Cita";
 
-const ListaCitas = () => {
+const ListaCitas = ({datosProps}) => {
   return (
     <div>
       <div className="text-center bg-white rounded-3">
         <h2>Lista de citas</h2>
-        <div className="border border-1 border-dark-subtle rounded-3">
-          <Cita />
-        </div>
+        <div className="row row-cols-2 row-cols-md-3">
+      {datosProps.map((item, indice) => (
+        <Cita
+          key={indice}
+          datosProps={item}
+          
+        />
+      ))}
+    </div>
       </div>
     </div>
   );

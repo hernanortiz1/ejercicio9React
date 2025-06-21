@@ -1,33 +1,33 @@
 import { Card, CardGroup, Form, Button } from "react-bootstrap";
 
-const Cita = () => {
+const Cita = ({datosProps}) => {
   return (
     <section className="p-3">
-      <div className="row row-cols-2 row-cols-md-3 g-4">
+      <div className="">
         <div className="col">
           <Card>
             <Card.Title className="m-2 text-start">
-              <h4>Mascota:</h4>
-              <h5>Dueño:</h5>
+              <h4>Mascota: {datosProps.nombreMascota}</h4>
+              <h5>Dueño: {datosProps.nombreDuenio}</h5>
             </Card.Title>
             <Card.Body className="fondoFormulario text-start">
               <div className="">
                 <div className="d-md-flex align-items-center mb-2 text-center text-md-start">
-                  <strong className="me-2">Fecha:</strong>
+                  <strong className="me-2">Fecha: </strong>
                   <div className="bg-secondary-subtle py-1 w-100 rounded text-center">
-                    10/10/2025
+                   {datosProps.fecha.split("-").reverse().join("/")}
                   </div>
                 </div>
                 <div className="d-md-flex  align-items-center mb-2 text-center text-md-start">
                   <strong className="me-2">Hora:</strong>
                   <div className="bg-secondary-subtle py-1 w-100 rounded text-center">
-                    10:50
+                    {datosProps.hora}
                   </div>
                 </div>
                 <div className="d-md-flex align-items-center mb-2 text-center text-md-start">
                   <strong className="me-2">Sintomas:</strong>
                   <div className="bg-secondary-subtle py-1 w-100 rounded text-center">
-                    Fiebre
+                   {datosProps.sintomas}
                   </div>
                 </div>
               </div>
