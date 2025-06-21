@@ -15,7 +15,7 @@ const Cita = ({datosProps}) => {
                 <div className="d-md-flex align-items-center mb-2 text-center text-md-start">
                   <strong className="me-2">Fecha: </strong>
                   <div className="bg-secondary-subtle py-1 w-100 rounded text-center">
-                   {datosProps.fecha}
+                   {datosProps.fecha.split("-").reverse().join("/")}
                   </div>
                 </div>
                 <div className="d-md-flex  align-items-center mb-2 text-center text-md-start">

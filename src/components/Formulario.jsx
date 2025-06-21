@@ -30,7 +30,7 @@ const Formulario = () => {
     } else {
       Swal.fire({
         title: "Datos guardados correctamente",
-        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha}, ${dato.hora}, ${dato.sintomas}`,
+        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha.split("-").reverse().join("/")}, ${dato.hora}, ${dato.sintomas}`,
         icon: "success",
         draggable: true,
       });
@@ -85,7 +85,7 @@ const Formulario = () => {
               <Form.Control
                 required
                 type="text"
-                placeholder="Ingrese apellido"
+                placeholder="Ingrese nombre de dueño"
                 value={dato.nombreDuenio}
                 name="nombreDuenio"
                 onChange={(e) =>
