@@ -165,7 +165,7 @@ const Formulario = () => {
         </Form>
       </section>
       <section className="my-3">
-        <ListaCitas datosProps={datosCorrectos} />
+        <ListaCitas datosProps={datosCorrectos} borrarColorProps={borrarDatos}/>
       </section>
     </div>
   );
