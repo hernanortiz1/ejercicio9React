@@ -1,19 +1,52 @@
 import { useState } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
+import Swal from "sweetalert2";
 
 const Formulario = () => {
-  const [validated, setValidated] = useState(false);
+ 
+  const [dato, setDato] = useState({
+      nombreMascota: "",
+      nombreDuenio: "",
+      fecha: "",
+      hora: "",
+      sintomas: "",
+    });
+    const [datosCorrectos, setDatosCorrectos] = useState([]);
+    const [validated, setValidated] = useState(false);
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+  
+      const form = e.currentTarget;
+  
+      if (form.checkValidity() === false) {
+        e.stopPropagation();
+       
+        Swal.fire({
+          icon: "error",
+          title: "Datos incorrectos!",
+          text: "Volvé a ingresar los datos",
+        });
+      } else {
+        Swal.fire({
+          title: "Datos guardados correctamente",
+          text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha}, ${dato.hora}, ${dato.sintomas}`,
+          icon: "success",
+          draggable: true,
+        });
+      }
+  
+      setDatosCorrectos([...datosCorrectos, dato]);
+      setDato({
+        nombre: "",
+        apellido: "",
+        dni: "",
+        email: "",
+      });
+      setValidated(false);
+    };
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    setValidated(true);
-  };
   return (
     <div>
       <section className="p-3 border rounded-3 fondoFormulario">
