@@ -1,6 +1,6 @@
 import Cita from "./Cita";
 
-const ListaCitas = () => {
+const ListaCitas = ({datosProps}) => {
   return (
     <div>
       <div className="text-center bg-white rounded-3">
