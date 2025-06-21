@@ -1,6 +1,34 @@
-import { Card, CardGroup, Form, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
-const Cita = ({datosProps}) => {
+const Cita = ({datosProps, borrarDatosProps}) => {
+  const confirmarBorrado = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: `La cita de ${datosProps.nombreMascota} y ${datosProps.nombreDuenio} se eliminará`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, borrar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        borrarDatosProps(datosProps);
+
+        Swal.fire({
+          title: "Eliminado",
+          text: `La cita de ${datosProps.nombreMascota} y ${datosProps.nombreDuenio} fue borrada correctamente`,
+          icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
+  
+  
+  
   return (
     <section className="p-3">
       <div className="">
@@ -38,6 +66,7 @@ const Cita = ({datosProps}) => {
                   type="submit"
                   variant="danger"
                   className="px-3 shadow-sm"
+                   onClick={confirmarBorrado}
                 >
                   Borrar
                 </Button>

@@ -51,14 +51,14 @@ const Formulario = () => {
     setValidated(false);
   };
 
-  const borrarDatos = (nombreDuenio) => {
-    const indice = colores.findIndex((item) => item === nombreDuenio);
+  const borrarDatos = (citaEliminada) => {
+    const indice = datosCorrectos.findIndex((item) => item === citaEliminada);
 
     if (indice !== -1) {
       const datosNuevos = [...datosCorrectos];
 
       datosNuevos.splice(indice, 1);
-      setColores(datosNuevos);
+      setDatosCorrectos(datosNuevos);
     }
   };
 
@@ -165,7 +165,7 @@ const Formulario = () => {
         </Form>
       </section>
       <section className="my-3">
-        <ListaCitas datosProps={datosCorrectos} />
+        <ListaCitas datosProps={datosCorrectos} borrarDatosProps={borrarDatos}/>
       </section>
     </div>
   );
