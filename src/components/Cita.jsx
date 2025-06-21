@@ -20,7 +20,7 @@ const Cita = ({datosProps, borrarDatosProps}) => {
           title: "Eliminado",
           text: `La cita de ${datosProps.nombreMascota} y ${datosProps.nombreDuenio} fue borrada correctamente`,
           icon: "success",
-          timer: 1200,
+          timer: 2000,
           showConfirmButton: false,
         });
       }
