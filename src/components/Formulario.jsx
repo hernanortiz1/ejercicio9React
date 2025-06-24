@@ -1,54 +1,32 @@
-import { useState,  useEffect  } from "react";
+import { useState, useEffect } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import ListaCitas from "./ListaCitas";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 
 const Formulario = () => {
-  const [dato, setDato] = useState({
-    nombreMascota: "",
-    nombreDuenio: "",
-    fecha: "",
-    hora: "",
-    sintomas: "",
-  });
   const [datosCorrectos, setDatosCorrectos] = useState([]);
-  const [validated, setValidated] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    const form = e.currentTarget;
+  const agregarDatos = (datos) => {
+    Swal.fire({
+      title: "Datos guardados correctamente",
+      text: `${datos.nombreMascota}, ${datos.nombreDuenio}, ${datos.fecha
+        .split("-")
+        .reverse()
+        .join("/")}, ${datos.hora}, ${datos.sintomas}`,
+      icon: "success",
+      draggable: true,
+    });
 
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-
-      Swal.fire({
-        icon: "error",
-        title: "Datos incorrectos!",
-        text: "Volvé a ingresar los datos",
-      });
-    } else {
-      Swal.fire({
-        title: "Datos guardados correctamente",
-        text: `${dato.nombreMascota}, ${dato.nombreDuenio}, ${dato.fecha
-          .split("-")
-          .reverse()
-          .join("/")}, ${dato.hora}, ${dato.sintomas}`,
-        icon: "success",
-        draggable: true,
-      });
-
-      setDatosCorrectos([...datosCorrectos, dato]);
-      setDato({
-        nombreMascota: "",
-        nombreDuenio: "",
-        fecha: "",
-        hora: "",
-        sintomas: "",
-      });
-    }
-
-    setValidated(false);
+    setDatosCorrectos([...datosCorrectos, datos]);
+    reset();
   };
 
   const borrarDatos = (citaEliminada) => {
@@ -165,7 +143,10 @@ const Formulario = () => {
         </Form>
       </section>
       <section className="my-3">
-        <ListaCitas datosProps={datosCorrectos} borrarDatosProps={borrarDatos}/>
+        <ListaCitas
+          datosProps={datosCorrectos}
+          borrarDatosProps={borrarDatos}
+        />
       </section>
     </div>
   );
