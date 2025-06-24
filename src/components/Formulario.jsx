@@ -109,7 +109,7 @@ const Formulario = () => {
                   required: "La fecha es obligatoria",
                   validate: (value) => {
                     const [year, month, day] = value.split("-").map(Number);
-                    const fechaSeleccionada = new Date(year, month - 1, day); // Mes base 0
+                    const fechaSeleccionada = new Date(year, month - 1, day);
                     const hoy = new Date();
                     hoy.setHours(0, 0, 0, 0);
 
